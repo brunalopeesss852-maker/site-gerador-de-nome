@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Nomes Aleatórios</title>
+    <title>Gerador de Nomes & Senhas</title>
     <style>
         * {
             margin: 0;
@@ -26,7 +26,7 @@
             border-radius: 30px;
             padding: 40px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 700px;
+            max-width: 800px;
             width: 100%;
             animation: slideUp 0.6s ease-out;
         }
@@ -42,8 +42,12 @@
             }
         }
 
-        h1 {
+        .header {
             text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
             color: #333;
             margin-bottom: 10px;
             font-size: 2.5em;
@@ -54,17 +58,89 @@
         }
 
         .subtitle {
-            text-align: center;
             color: #666;
-            margin-bottom: 30px;
             font-size: 1.1em;
+            margin-bottom: 20px;
         }
 
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .external-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: #f7fafc;
+            padding: 5px;
+            border-radius: 15px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            color: #718096;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: white;
+            color: #4a5568;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Estilos do Gerador de Nomes */
         .selectors {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         @media (max-width: 600px) {
@@ -114,7 +190,6 @@
 
         .option-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             border-color: #667eea;
         }
 
@@ -122,18 +197,233 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border-color: transparent;
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
-        .flag {
-            font-size: 1.2em;
+        /* Estilos do Gerador de Senhas */
+        .password-section {
+            background: #f7fafc;
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #e2e8f0;
         }
 
-        .gender-icon {
-            font-size: 1.2em;
+        .length-control {
+            margin-bottom: 25px;
         }
 
+        .length-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .length-label {
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .length-value {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #e2e8f0;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.4);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.4);
+        }
+
+        .checkboxes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 500px) {
+            .checkboxes {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: white;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-item:hover {
+            border-color: #cbd5e0;
+            transform: translateX(3px);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            font-weight: 500;
+            color: #4a5568;
+            flex: 1;
+        }
+
+        .password-result {
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .password-result:focus-within {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .password-display {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2d3748;
+            word-break: break-all;
+            letter-spacing: 2px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .password-strength {
+            margin-top: 10px;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            transition: all 0.4s ease;
+            border-radius: 3px;
+        }
+
+        .strength-weak { background: #f56565; width: 33%; }
+        .strength-medium { background: #ed8936; width: 66%; }
+        .strength-strong { background: #48bb78; width: 100%; }
+
+        .password-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            flex: 2;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            padding: 15px;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .copied-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #48bb78;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 5px 20px rgba(72, 187, 120, 0.4);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .copied-notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Stats e Resultados */
         .stats {
             display: flex;
             justify-content: space-around;
@@ -167,89 +457,39 @@
             padding: 40px;
             text-align: center;
             margin-bottom: 25px;
-            min-height: 160px;
+            min-height: 140px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            position: relative;
-            overflow: hidden;
-            border: 3px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .result-box.glow {
-            animation: glow 1.5s ease-in-out;
-        }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 5px rgba(102, 126, 234, 0.2); }
-            50% { box-shadow: 0 0 30px rgba(102, 126, 234, 0.6); }
         }
 
         .name-display {
             font-size: 2.2em;
             font-weight: bold;
             color: #2d3748;
-            z-index: 1;
-            position: relative;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.4s ease;
-        }
-
-        .name-display.show {
-            opacity: 1;
-            transform: translateY(0);
+            margin-bottom: 10px;
         }
 
         .name-details {
             font-size: 0.9em;
             color: #718096;
-            margin-top: 10px;
-            z-index: 1;
             text-transform: uppercase;
             letter-spacing: 2px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
         }
 
-        .generate-btn {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 15px;
-            font-size: 1.2em;
+        .badge {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
             font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            margin: 0 3px;
         }
 
-        .generate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .generate-btn:active {
-            transform: translateY(0);
-        }
-
-        .generate-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
+        .badge-br { background: #c6f6d5; color: #22543d; }
+        .badge-es { background: #feebc8; color: #744210; }
+        .badge-us { background: #bee3f8; color: #2a4365; }
+        .badge-m { background: #bee3f8; color: #2b6cb0; }
+        .badge-f { background: #fbb6ce; color: #97266d; }
 
         .history {
             margin-top: 30px;
@@ -280,13 +520,10 @@
             font-size: 0.85em;
             opacity: 0.7;
             transition: all 0.2s;
-            padding: 5px 10px;
-            border-radius: 5px;
         }
 
         .clear-btn:hover {
             opacity: 1;
-            background: #fed7d7;
         }
 
         .history-list {
@@ -299,231 +536,196 @@
 
         .history-item {
             background: white;
-            padding: 12px 15px;
+            padding: 12px;
             border-radius: 10px;
-            font-size: 0.95em;
-            color: #4a5568;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            animation: slideIn 0.3s ease;
-            border-left: 4px solid #667eea;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .history-meta {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            font-size: 0.8em;
-            color: #a0aec0;
-        }
-
-        .badge {
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.75em;
-            font-weight: bold;
-        }
-
-        .badge-br { background: #c6f6d5; color: #22543d; }
-        .badge-es { background: #feebc8; color: #744210; }
-        .badge-us { background: #bee3f8; color: #2a4365; }
-        .badge-m { background: #bee3f8; color: #2b6cb0; }
-        .badge-f { background: #fbb6ce; color: #97266d; }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 25px;
-            }
-            
-            h1 {
-                font-size: 1.8em;
-            }
-            
-            .name-display {
-                font-size: 1.6em;
-            }
-            
-            .selectors {
-                gap: 15px;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>👤 Gerador de Nomes</h1>
-        <p class="subtitle">Gere nomes completos por país e gênero</p>
-        
-        <div class="selectors">
-            <div class="selector-group">
-                <div class="selector-title">🌍 País</div>
-                <div class="country-options">
-                    <button class="option-btn active" onclick="selectCountry('BR')">
-                        <span class="flag">🇧🇷</span>
-                        <span>Brasil</span>
+        <div class="header">
+            <h1>🛠️ Gerador Pro</h1>
+            <p class="subtitle">Nomes aleatórios & Senhas seguras</p>
+            
+            <a href="https://deft-monstera-221d39.netlify.app/" target="_blank" class="external-link">
+                <span>🌐</span>
+                <span>Acessar Chat Externo</span>
+                <span>↗️</span>
+            </a>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('names')">
+                <span>👤</span>
+                <span>Nomes</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('passwords')">
+                <span>🔐</span>
+                <span>Senhas</span>
+            </button>
+        </div>
+
+        <!-- Aba de Nomes -->
+        <div id="names-tab" class="tab-content active">
+            <div class="selectors">
+                <div class="selector-group">
+                    <div class="selector-title">🌍 País</div>
+                    <div class="country-options">
+                        <button class="option-btn active" onclick="selectCountry('BR')">
+                            <span>🇧🇷</span>
+                            <span>Brasil</span>
+                        </button>
+                        <button class="option-btn" onclick="selectCountry('ES')">
+                            <span>🇪🇸</span>
+                            <span>Espanha</span>
+                        </button>
+                        <button class="option-btn" onclick="selectCountry('US')">
+                            <span>🇺🇸</span>
+                            <span>EUA</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="selector-group">
+                    <div class="selector-title">⚤ Gênero</div>
+                    <div class="gender-options">
+                        <button class="option-btn active" onclick="selectGender('M')">
+                            <span>👨</span>
+                            <span>Masc</span>
+                        </button>
+                        <button class="option-btn" onclick="selectGender('F')">
+                            <span>👩</span>
+                            <span>Fem</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="totalNames">0</div>
+                    <div class="stat-label">Gerados</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="currentCountry">🇧🇷</div>
+                    <div class="stat-label">País</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="currentGender">👨</div>
+                    <div class="stat-label">Gênero</div>
+                </div>
+            </div>
+
+            <div class="result-box" id="resultBox">
+                <div class="name-display" id="nameDisplay">Selecione as opções</div>
+                <div class="name-details" id="nameDetails">e clique em gerar</div>
+            </div>
+
+            <button class="btn-primary" onclick="generateName()" style="width: 100%;">
+                <span>✨</span>
+                <span>Gerar Nome Aleatório</span>
+            </button>
+
+            <div class="history" id="historySection" style="display: none;">
+                <div class="history-header">
+                    <div class="history-title">📜 Histórico</div>
+                    <button class="clear-btn" onclick="clearHistory()">Limpar</button>
+                </div>
+                <div class="history-list" id="historyList"></div>
+            </div>
+        </div>
+
+        <!-- Aba de Senhas -->
+        <div id="passwords-tab" class="tab-content">
+            <div class="password-section">
+                <div class="length-control">
+                    <div class="length-header">
+                        <span class="length-label">📏 Comprimento da Senha</span>
+                        <span class="length-value" id="lengthValue">16</span>
+                    </div>
+                    <input type="range" min="9" max="30" value="16" class="slider" id="lengthSlider" 
+                           oninput="updateLength(this.value)">
+                    <div style="display: flex; justify-content: space-between; margin-top: 5px; font-size: 0.8em; color: #718096;">
+                        <span>9</span>
+                        <span>30+</span>
+                    </div>
+                </div>
+
+                <div class="selector-title" style="margin-bottom: 15px;">⚙️ Caracteres Permitidos</div>
+                <div class="checkboxes">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="uppercase" checked onchange="validateCheckboxes()">
+                        <label for="uppercase">ABC... (Maiúsculas)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="lowercase" checked onchange="validateCheckboxes()">
+                        <label for="lowercase">abc... (Minúsculas)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="numbers" checked onchange="validateCheckboxes()">
+                        <label for="numbers">123... (Números)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="symbols" checked onchange="validateCheckboxes()">
+                        <label for="symbols">@#$... (Especiais)</label>
+                    </div>
+                </div>
+
+                <div class="password-result">
+                    <div class="password-display" id="passwordDisplay">Clique em gerar</div>
+                    <div class="password-strength">
+                        <div class="strength-bar" id="strengthBar"></div>
+                    </div>
+                </div>
+
+                <div class="password-actions">
+                    <button class="btn-secondary" onclick="copyPassword()">
+                        <span>📋</span>
+                        <span>Copiar</span>
                     </button>
-                    <button class="option-btn" onclick="selectCountry('ES')">
-                        <span class="flag">🇪🇸</span>
-                        <span>Espanha</span>
-                    </button>
-                    <button class="option-btn" onclick="selectCountry('US')">
-                        <span class="flag">🇺🇸</span>
-                        <span>EUA</span>
+                    <button class="btn-primary" onclick="generatePassword()">
+                        <span>🔄</span>
+                        <span>Gerar Senha</span>
                     </button>
                 </div>
             </div>
 
-            <div class="selector-group">
-                <div class="selector-title">⚤ Gênero</div>
-                <div class="gender-options">
-                    <button class="option-btn active" onclick="selectGender('M')">
-                        <span class="gender-icon">👨</span>
-                        <span>Masc</span>
-                    </button>
-                    <button class="option-btn" onclick="selectGender('F')">
-                        <span class="gender-icon">👩</span>
-                        <span>Fem</span>
-                    </button>
+            <div class="history" style="margin-top: 20px;">
+                <div class="history-header">
+                    <div class="history-title">📜 Histórico de Senhas</div>
+                    <button class="clear-btn" onclick="clearPasswordHistory()">Limpar</button>
                 </div>
+                <div class="history-list" id="passwordHistoryList"></div>
             </div>
-        </div>
-
-        <div class="stats">
-            <div class="stat">
-                <div class="stat-value" id="totalNames">0</div>
-                <div class="stat-label">Gerados</div>
-            </div>
-            <div class="stat">
-                <div class="stat-value" id="currentCountry">🇧🇷</div>
-                <div class="stat-label">País</div>
-            </div>
-            <div class="stat">
-                <div class="stat-value" id="currentGender">👨</div>
-                <div class="stat-label">Gênero</div>
-            </div>
-        </div>
-
-        <div class="result-box" id="resultBox">
-            <div class="name-display" id="nameDisplay">Selecione as opções</div>
-            <div class="name-details" id="nameDetails">e clique em gerar</div>
-        </div>
-
-        <button class="generate-btn" id="generateBtn" onclick="generateName()">
-            <span>✨</span>
-            <span>Gerar Nome Aleatório</span>
-        </button>
-
-        <div class="history" id="historySection" style="display: none;">
-            <div class="history-header">
-                <div class="history-title">📜 Histórico</div>
-                <button class="clear-btn" onclick="clearHistory()">Limpar tudo</button>
-            </div>
-            <div class="history-list" id="historyList"></div>
         </div>
     </div>
 
+    <div class="copied-notification" id="copiedNotification">
+        ✅ Copiado para a área de transferência!
+    </div>
+
     <script>
-        // Banco de dados com 50 nomes masculinos e 50 femininos por país
+        // Banco de dados de nomes (50 de cada)
         const namesDB = {
             BR: {
-                M: [
-                    'João', 'José', 'Pedro', 'Lucas', 'Gabriel', 'Matheus', 'Rafael', 'Guilherme', 
-                    'Felipe', 'Vinicius', 'Leonardo', 'Bruno', 'Daniel', 'Gustavo', 'André', 'Marcelo', 
-                    'Ricardo', 'Fernando', 'Eduardo', 'Rodrigo', 'Tiago', 'Alexandre', 'Diego', 'Carlos', 
-                    'Antônio', 'Francisco', 'Paulo', 'Marcos', 'Luiz', 'Jorge', 'Mateus', 'Danilo', 
-                    'Leandro', 'Fabio', 'Raul', 'Sérgio', 'Murilo', 'Igor', 'Caio', 'Renan', 
-                    'Vitor', 'Julio', 'César', 'Thiago', 'Nicolas', 'Samuel', 'Enzo', 'Davi', 
-                    'Arthur', 'Lorenzo'
-                ],
-                F: [
-                    'Maria', 'Ana', 'Julia', 'Beatriz', 'Mariana', 'Larissa', 'Isabela', 'Manuela', 
-                    'Valentina', 'Alice', 'Sofia', 'Laura', 'Luiza', 'Amanda', 'Bianca', 'Camila', 
-                    'Carolina', 'Fernanda', 'Letícia', 'Natália', 'Patrícia', 'Helena', 'Lorena', 
-                    'Gabriela', 'Yasmin', 'Lívia', 'Clara', 'Isabella', 'Melissa', 'Sarah', 'Elisa', 
-                    'Lara', 'Marina', 'Emanuelly', 'Rebeca', 'Raquel', 'Simone', 'Tatiane', 'Vanessa', 
-                    'Jaqueline', 'Bruna', 'Daniela', 'Renata', 'Jéssica', 'Aline', 'Natalia', 'Priscila', 
-                    'Rayssa', 'Alana', 'Brenda', 'Cecília', 'Esther'
-                ],
-                last: [
-                    'Silva', 'Santos', 'Oliveira', 'Souza', 'Rodrigues', 'Ferreira', 'Alves', 
-                    'Pereira', 'Lima', 'Gomes', 'Costa', 'Ribeiro', 'Martins', 'Carvalho', 
-                    'Araújo', 'Melo', 'Barbosa', 'Monteiro', 'Cardoso', 'Teixeira', 'Mendes',
-                    'Nascimento', 'Dias', 'Moreira', 'Freitas', 'Novaes', 'Andrade', 'Rezende',
-                    'Batista', 'Nunes', 'Machado', 'Bezerra', 'Coelho', 'Pinto', 'Cavalcanti',
-                    'Barros', 'Cunha', 'Magalhães', 'Fonseca', 'Azevedo', 'Freire', 'Maia',
-                    'Matos', 'Siqueira', 'Peixoto', 'Farias', 'Medeiros', 'Guimarães', 'Tavares'
-                ]
+                M: ['João', 'José', 'Pedro', 'Lucas', 'Gabriel', 'Matheus', 'Rafael', 'Guilherme', 'Felipe', 'Vinicius', 'Leonardo', 'Bruno', 'Daniel', 'Gustavo', 'André', 'Marcelo', 'Ricardo', 'Fernando', 'Eduardo', 'Rodrigo', 'Tiago', 'Alexandre', 'Diego', 'Carlos', 'Antônio', 'Francisco', 'Paulo', 'Marcos', 'Luiz', 'Jorge', 'Mateus', 'Danilo', 'Leandro', 'Fabio', 'Raul', 'Sérgio', 'Murilo', 'Igor', 'Caio', 'Renan', 'Vitor', 'Julio', 'César', 'Thiago', 'Nicolas', 'Samuel', 'Enzo', 'Davi', 'Arthur', 'Lorenzo'],
+                F: ['Maria', 'Ana', 'Julia', 'Beatriz', 'Mariana', 'Larissa', 'Isabela', 'Manuela', 'Valentina', 'Alice', 'Sofia', 'Laura', 'Luiza', 'Amanda', 'Bianca', 'Camila', 'Carolina', 'Fernanda', 'Letícia', 'Natália', 'Patrícia', 'Helena', 'Lorena', 'Gabriela', 'Yasmin', 'Lívia', 'Clara', 'Isabella', 'Melissa', 'Sarah', 'Elisa', 'Lara', 'Marina', 'Emanuelly', 'Rebeca', 'Raquel', 'Simone', 'Tatiane', 'Vanessa', 'Jaqueline', 'Bruna', 'Daniela', 'Renata', 'Jéssica', 'Aline', 'Natalia', 'Priscila', 'Rayssa', 'Alana', 'Brenda'],
+                last: ['Silva', 'Santos', 'Oliveira', 'Souza', 'Rodrigues', 'Ferreira', 'Alves', 'Pereira', 'Lima', 'Gomes', 'Costa', 'Ribeiro', 'Martins', 'Carvalho', 'Araújo', 'Melo', 'Barbosa', 'Monteiro', 'Cardoso', 'Teixeira', 'Mendes', 'Nascimento', 'Dias', 'Moreira', 'Freitas', 'Novaes', 'Andrade', 'Rezende', 'Batista', 'Nunes', 'Machado', 'Bezerra', 'Coelho', 'Pinto', 'Cavalcanti', 'Barros', 'Cunha', 'Magalhães', 'Fonseca', 'Azevedo', 'Freire', 'Maia', 'Matos', 'Siqueira', 'Peixoto', 'Farias', 'Medeiros', 'Guimarães', 'Tavares', 'Moraes']
             },
             ES: {
-                M: [
-                    'José', 'Juan', 'Antonio', 'Manuel', 'Francisco', 'Javier', 'David', 'Carlos', 
-                    'Jesús', 'Miguel', 'Ángel', 'Rafael', 'Pedro', 'Alejandro', 'Mario', 'Sergio', 
-                    'Pablo', 'Jorge', 'Diego', 'Álvaro', 'Rubén', 'Andrés', 'Adrián', 'Fernando', 
-                    'Alberto', 'Enrique', 'Santiago', 'Vicente', 'Iván', 'Raul', 'Mario', 'Hugo', 
-                    'Marcos', 'Óscar', 'Gabriel', 'Martín', 'Daniel', 'Gonzalo', 'Raúl', 'Eduardo', 
-                    'Víctor', 'Ricardo', 'Mariano', 'Julio', 'Agustín', 'Felipe', 'Jaime', 'Luis', 
-                    'Tomás', 'Salvador'
-                ],
-                F: [
-                    'María', 'Ana', 'Laura', 'Carmen', 'Isabel', 'Marta', 'Cristina', 'Lucía', 
-                    'Sara', 'Paula', 'Daniela', 'Patricia', 'Elena', 'Raquel', 'Sofía', 'Julia', 
-                    'Claudia', 'Irene', 'Marina', 'Victoria', 'Rocío', 'Inés', 'Alba', 'Natalia', 
-                    'Monica', 'Ainhoa', 'Andrea', 'Yolanda', 'Teresa', 'Rosa', 'Anna', 'Angela', 
-                    'Sandra', 'Mónica', 'Nuria', 'Mercedes', 'Celia', 'Lorena', 'Gloria', 'Esther', 
-                    'Martina', 'Valentina', 'Camila', 'Victoria', 'Noa', 'Leyre', 'Candela', 'Ainara', 
-                    'Nerea', 'Ariadna', 'Laia'
-                ],
-                last: [
-                    'García', 'Rodríguez', 'González', 'Fernández', 'López', 'Martínez', 'Sánchez',
-                    'Pérez', 'Gómez', 'Martín', 'Jiménez', 'Ruiz', 'Hernández', 'Díaz', 'Moreno',
-                    'Álvarez', 'Muñoz', 'Romero', 'Alonso', 'Gutiérrez', 'Navarro', 'Torres',
-                    'Domínguez', 'Vázquez', 'Ramos', 'Gil', 'Serrano', 'Castro', 'Suárez',
-                    'Delgado', 'Ortega', 'Rubio', 'Molina', 'Iglesias', 'Santos', 'Cruz',
-                    'Reyes', 'Mora', 'Bravo', 'Cabrera', 'Flores', 'Campos', 'Vega', 'Fuentes',
-                    'Carrasco', 'Rey', 'Pascual', 'Herrera', 'Nieto', 'Soler', 'Cano'
-                ]
+                M: ['José', 'Juan', 'Antonio', 'Manuel', 'Francisco', 'Javier', 'David', 'Carlos', 'Jesús', 'Miguel', 'Ángel', 'Rafael', 'Pedro', 'Alejandro', 'Mario', 'Sergio', 'Pablo', 'Jorge', 'Diego', 'Álvaro', 'Rubén', 'Andrés', 'Adrián', 'Fernando', 'Alberto', 'Enrique', 'Santiago', 'Vicente', 'Iván', 'Raul', 'Marcos', 'Hugo', 'Óscar', 'Gabriel', 'Martín', 'Daniel', 'Gonzalo', 'Raúl', 'Eduardo', 'Víctor', 'Ricardo', 'Mariano', 'Julio', 'Agustín', 'Felipe', 'Jaime', 'Luis', 'Tomás', 'Salvador', 'Pascual'],
+                F: ['María', 'Ana', 'Laura', 'Carmen', 'Isabel', 'Marta', 'Cristina', 'Lucía', 'Sara', 'Paula', 'Daniela', 'Patricia', 'Elena', 'Raquel', 'Sofía', 'Julia', 'Claudia', 'Irene', 'Marina', 'Victoria', 'Rocío', 'Inés', 'Alba', 'Natalia', 'Monica', 'Ainhoa', 'Andrea', 'Yolanda', 'Teresa', 'Rosa', 'Anna', 'Angela', 'Sandra', 'Mónica', 'Nuria', 'Mercedes', 'Celia', 'Lorena', 'Gloria', 'Esther', 'Martina', 'Valentina', 'Camila', 'Noa', 'Leyre', 'Candela', 'Ainara', 'Nerea', 'Ariadna', 'Laia'],
+                last: ['García', 'Rodríguez', 'González', 'Fernández', 'López', 'Martínez', 'Sánchez', 'Pérez', 'Gómez', 'Martín', 'Jiménez', 'Ruiz', 'Hernández', 'Díaz', 'Moreno', 'Álvarez', 'Muñoz', 'Romero', 'Alonso', 'Gutiérrez', 'Navarro', 'Torres', 'Domínguez', 'Vázquez', 'Ramos', 'Gil', 'Serrano', 'Castro', 'Suárez', 'Delgado', 'Ortega', 'Rubio', 'Molina', 'Iglesias', 'Santos', 'Cruz', 'Reyes', 'Mora', 'Bravo', 'Cabrera', 'Flores', 'Campos', 'Vega', 'Fuentes', 'Carrasco', 'Rey', 'Pascual', 'Herrera', 'Nieto', 'Soler']
             },
             US: {
-                M: [
-                    'James', 'John', 'Robert', 'Michael', 'William', 'David', 'Richard', 'Joseph', 
-                    'Thomas', 'Charles', 'Christopher', 'Daniel', 'Matthew', 'Anthony', 'Mark', 
-                    'Donald', 'Steven', 'Paul', 'Andrew', 'Kenneth', 'Joshua', 'Kevin', 'Brian', 
-                    'George', 'Edward', 'Ronald', 'Timothy', 'Jason', 'Jeffrey', 'Ryan', 'Jacob', 
-                    'Gary', 'Nicholas', 'Eric', 'Jonathan', 'Stephen', 'Larry', 'Justin', 'Scott', 
-                    'Brandon', 'Benjamin', 'Samuel', 'Gregory', 'Frank', 'Alexander', 'Raymond', 
-                    'Patrick', 'Jack', 'Dennis', 'Jerry', 'Tyler'
-                ],
-                F: [
-                    'Mary', 'Jennifer', 'Linda', 'Patricia', 'Elizabeth', 'Susan', 'Jessica', 'Sarah', 
-                    'Karen', 'Nancy', 'Lisa', 'Betty', 'Margaret', 'Sandra', 'Ashley', 'Kimberly', 
-                    'Emily', 'Donna', 'Michelle', 'Dorothy', 'Carol', 'Amanda', 'Melissa', 'Deborah', 
-                    'Stephanie', 'Rebecca', 'Laura', 'Sharon', 'Cynthia', 'Kathleen', 'Amy', 'Shirley', 
-                    'Angela', 'Helen', 'Anna', 'Brenda', 'Pamela', 'Nicole', 'Samantha', 'Katherine', 
-                    'Emma', 'Ruth', 'Christine', 'Catherine', 'Debra', 'Rachel', 'Carolyn', 'Janet', 
-                    'Virginia', 'Maria', 'Heather'
-                ],
-                last: [
-                    'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis',
-                    'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson',
-                    'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin', 'Lee', 'Perez', 'Thompson',
-                    'White', 'Harris', 'Sanchez', 'Clark', 'Ramirez', 'Lewis', 'Robinson', 'Walker',
-                    'Young', 'Allen', 'King', 'Wright', 'Scott', 'Torres', 'Nguyen', 'Hill', 'Flores',
-                    'Green', 'Adams', 'Nelson', 'Baker', 'Hall', 'Rivera', 'Campbell', 'Mitchell',
-                    'Carter', 'Roberts', 'Phillips', 'Evans'
-                ]
+                M: ['James', 'John', 'Robert', 'Michael', 'William', 'David', 'Richard', 'Joseph', 'Thomas', 'Charles', 'Christopher', 'Daniel', 'Matthew', 'Anthony', 'Mark', 'Donald', 'Steven', 'Paul', 'Andrew', 'Kenneth', 'Joshua', 'Kevin', 'Brian', 'George', 'Edward', 'Ronald', 'Timothy', 'Jason', 'Jeffrey', 'Ryan', 'Jacob', 'Gary', 'Nicholas', 'Eric', 'Jonathan', 'Stephen', 'Larry', 'Justin', 'Scott', 'Brandon', 'Benjamin', 'Samuel', 'Gregory', 'Frank', 'Alexander', 'Raymond', 'Patrick', 'Jack', 'Dennis', 'Jerry'],
+                F: ['Mary', 'Jennifer', 'Linda', 'Patricia', 'Elizabeth', 'Susan', 'Jessica', 'Sarah', 'Karen', 'Nancy', 'Lisa', 'Betty', 'Margaret', 'Sandra', 'Ashley', 'Kimberly', 'Emily', 'Donna', 'Michelle', 'Dorothy', 'Carol', 'Amanda', 'Melissa', 'Deborah', 'Stephanie', 'Rebecca', 'Laura', 'Sharon', 'Cynthia', 'Kathleen', 'Amy', 'Shirley', 'Angela', 'Helen', 'Anna', 'Brenda', 'Pamela', 'Nicole', 'Samantha', 'Katherine', 'Emma', 'Ruth', 'Christine', 'Catherine', 'Debra', 'Rachel', 'Carolyn', 'Janet', 'Virginia', 'Maria'],
+                last: ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin', 'Lee', 'Perez', 'Thompson', 'White', 'Harris', 'Sanchez', 'Clark', 'Ramirez', 'Lewis', 'Robinson', 'Walker', 'Young', 'Allen', 'King', 'Wright', 'Scott', 'Torres', 'Nguyen', 'Hill', 'Flores', 'Green', 'Adams', 'Nelson', 'Baker', 'Hall', 'Rivera', 'Campbell', 'Mitchell', 'Carter', 'Roberts']
             }
         };
 
@@ -531,33 +733,43 @@
         let currentGender = 'M';
         let history = [];
         let totalGenerated = 0;
+        let passwordHistory = [];
 
+        // Navegação entre abas
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(tab + '-tab').classList.add('active');
+            event.target.closest('.tab-btn').classList.add('active');
+        }
+
+        // Funções do Gerador de Nomes
         function selectCountry(country) {
             currentCountry = country;
-            
             document.querySelectorAll('.country-options .option-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             event.target.closest('.option-btn').classList.add('active');
-            
             updateStats();
         }
 
         function selectGender(gender) {
             currentGender = gender;
-            
             document.querySelectorAll('.gender-options .option-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             event.target.closest('.option-btn').classList.add('active');
-            
             updateStats();
         }
 
         function updateStats() {
             const flags = { 'BR': '🇧🇷', 'ES': '🇪🇸', 'US': '🇺🇸' };
             const genders = { 'M': '👨', 'F': '👩' };
-            
             document.getElementById('currentCountry').textContent = flags[currentCountry];
             document.getElementById('currentGender').textContent = genders[currentGender];
         }
@@ -567,105 +779,149 @@
             return names[code];
         }
 
-        function getGenderName(code) {
-            const names = { 'M': 'Masculino', 'F': 'Feminino' };
-            return names[code];
-        }
-
         function generateName() {
-            const btn = document.getElementById('generateBtn');
-            btn.disabled = true;
-            
             const db = namesDB[currentCountry];
-            const firstNames = db[currentGender];
-            const lastNames = db.last;
-            
-            const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
-            const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-            
-            // 50% chance de adicionar segundo sobrenome
+            const firstName = db[currentGender][Math.floor(Math.random() * db[currentGender].length)];
+            const lastName = db.last[Math.floor(Math.random() * db.last.length)];
             let fullName = `${firstName} ${lastName}`;
+            
             if (Math.random() > 0.5) {
-                const secondLastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-                if (secondLastName !== lastName) {
-                    fullName += ` ${secondLastName}`;
-                }
+                const secondLast = db.last[Math.floor(Math.random() * db.last.length)];
+                if (secondLast !== lastName) fullName += ` ${secondLast}`;
             }
             
-            // Animação
-            const display = document.getElementById('nameDisplay');
-            const resultBox = document.getElementById('resultBox');
+            document.getElementById('nameDisplay').textContent = fullName;
+            document.getElementById('nameDetails').innerHTML = `
+                <span class="badge badge-${currentCountry.toLowerCase()}">${getCountryName(currentCountry)}</span>
+                <span class="badge badge-${currentGender.toLowerCase()}">${currentGender === 'M' ? 'Masculino' : 'Feminino'}</span>
+            `;
             
-            display.classList.remove('show');
-            resultBox.classList.remove('glow');
+            totalGenerated++;
+            document.getElementById('totalNames').textContent = totalGenerated;
             
-            setTimeout(() => {
-                display.textContent = fullName;
-                document.getElementById('nameDetails').innerHTML = `
-                    <span class="badge badge-${currentCountry.toLowerCase()}">${getCountryName(currentCountry)}</span>
-                    <span class="badge badge-${currentGender.toLowerCase()}">${getGenderName(currentGender)}</span>
-                `;
-                
-                display.classList.add('show');
-                resultBox.classList.add('glow');
-                
-                totalGenerated++;
-                document.getElementById('totalNames').textContent = totalGenerated;
-                
-                addToHistory(fullName, currentCountry, currentGender);
-                
-                setTimeout(() => {
-                    btn.disabled = false;
-                }, 300);
-            }, 200);
+            addToHistory(fullName);
         }
 
-        function addToHistory(name, country, gender) {
+        function addToHistory(name) {
             const historySection = document.getElementById('historySection');
-            const historyList = document.getElementById('historyList');
-            
-            history.unshift({ 
-                name, 
-                country, 
-                gender, 
-                time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) 
-            });
-            
-            if (history.length > 10) history.pop();
+            history.unshift({ name, country: currentCountry, gender: currentGender, time: new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}) });
+            if (history.length > 5) history.pop();
             
             historySection.style.display = 'block';
             renderHistory();
         }
 
         function renderHistory() {
-            const historyList = document.getElementById('historyList');
-            
-            historyList.innerHTML = history.map(item => `
+            document.getElementById('historyList').innerHTML = history.map(item => `
                 <div class="history-item">
                     <div>
                         <strong>${item.name}</strong>
-                        <div style="margin-top: 4px;">
+                        <div style="margin-top:4px">
                             <span class="badge badge-${item.country.toLowerCase()}">${getCountryName(item.country)}</span>
                             <span class="badge badge-${item.gender.toLowerCase()}">${item.gender === 'M' ? 'Masc' : 'Fem'}</span>
                         </div>
                     </div>
-                    <div class="history-meta">
-                        <span>${item.time}</span>
-                    </div>
+                    <span style="color:#a0aec0;font-size:0.8em">${item.time}</span>
                 </div>
             `).join('');
         }
 
         function clearHistory() {
             history = [];
-            document.getElementById('historyList').innerHTML = '';
             document.getElementById('historySection').style.display = 'none';
-            totalGenerated = 0;
-            document.getElementById('totalNames').textContent = '0';
+        }
+
+        // Funções do Gerador de Senhas
+        function updateLength(val) {
+            document.getElementById('lengthValue').textContent = val;
+        }
+
+        function validateCheckboxes() {
+            const checkboxes = ['uppercase', 'lowercase', 'numbers', 'symbols'];
+            const checked = checkboxes.filter(id => document.getElementById(id).checked);
+            
+            if (checked.length === 0) {
+                document.getElementById('uppercase').checked = true;
+                alert('Selecione pelo menos uma opção!');
+            }
+        }
+
+        function generatePassword() {
+            const length = parseInt(document.getElementById('lengthSlider').value);
+            const useUpper = document.getElementById('uppercase').checked;
+            const useLower = document.getElementById('lowercase').checked;
+            const useNumbers = document.getElementById('numbers').checked;
+            const useSymbols = document.getElementById('symbols').checked;
+            
+            let chars = '';
+            if (useUpper) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            if (useLower) chars += 'abcdefghijklmnopqrstuvwxyz';
+            if (useNumbers) chars += '0123456789';
+            if (useSymbols) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+            
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            
+            document.getElementById('passwordDisplay').textContent = password;
+            
+            // Calcular força
+            let strength = 0;
+            if (useUpper) strength++;
+            if (useLower) strength++;
+            if (useNumbers) strength++;
+            if (useSymbols) strength++;
+            if (length >= 12) strength++;
+            if (length >= 20) strength++;
+            
+            const bar = document.getElementById('strengthBar');
+            bar.className = 'strength-bar';
+            if (strength <= 2) bar.classList.add('strength-weak');
+            else if (strength <= 4) bar.classList.add('strength-medium');
+            else bar.classList.add('strength-strong');
+            
+            // Adicionar ao histórico
+            addPasswordToHistory(password);
+        }
+
+        function addPasswordToHistory(password) {
+            passwordHistory.unshift({ 
+                password, 
+                time: new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}),
+                masked: password.substring(0, 3) + '•'.repeat(password.length - 6) + password.substring(password.length - 3)
+            });
+            if (passwordHistory.length > 5) passwordHistory.pop();
+            
+            renderPasswordHistory();
+        }
+
+        function renderPasswordHistory() {
+            document.getElementById('passwordHistoryList').innerHTML = passwordHistory.map(item => `
+                <div class="history-item" style="font-family: monospace;">
+                    <span>${item.masked}</span>
+                    <span style="color:#a0aec0;font-size:0.8em">${item.time}</span>
+                </div>
+            `).join('');
+        }
+
+        function clearPasswordHistory() {
+            passwordHistory = [];
+            document.getElementById('passwordHistoryList').innerHTML = '';
+        }
+
+        function copyPassword() {
+            const password = document.getElementById('passwordDisplay').textContent;
+            if (password === 'Clique em gerar') return;
+            
+            navigator.clipboard.writeText(password).then(() => {
+                const notif = document.getElementById('copiedNotification');
+                notif.classList.add('show');
+                setTimeout(() => notif.classList.remove('show'), 2000);
+            });
         }
 
         // Inicialização
-        document.getElementById('nameDisplay').classList.add('show');
         updateStats();
     </script>
 </body>
